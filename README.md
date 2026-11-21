@@ -102,13 +102,13 @@ In your terminal, run these one at a time:
 
 ```bash
 # Download the project
-git clone https://github.com/sangamhoni/cf_ai_continuum.git
+git clone https://github.com/sangamhoni/continuum-serverless.git
 
 # Move into the project folder
-cd cf_ai_continuum
+cd continuum-serverless
 ```
 
-> If you used the ZIP shortcut from Step 2, instead `cd` into the folder you unzipped, e.g. `cd Downloads/cf_ai_continuum-main`.
+> If you used the ZIP shortcut from Step 2, instead `cd` into the folder you unzipped, e.g. `cd Downloads/continuum-serverless-main`.
 
 You are now "inside" the project. Every remaining command must be run from here.
 
@@ -254,8 +254,8 @@ Or go to **Cloudflare Dashboard → Workers & Pages → continuum → Settings**
 
 ```bash
 # Clone the repository
-git clone https://github.com/sangamhoni/cf_ai_continuum.git
-cd cf_ai_continuum
+git clone https://github.com/sangamhoni/continuum-serverless.git
+cd continuum-serverless
 
 # Install dependencies
 npm install
