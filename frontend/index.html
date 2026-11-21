@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Continuum</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1 class="logo">
+          <span class="logo-icon">∞</span>
+          <span>Continuum</span>
+        </h1>
+      </div>
+      
+      <div class="capture-section">
+        <button class="capture-input" id="capture-btn">
+          <span class="icon">✦</span>
+          <span>Capture something...</span>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="ask">
+          <i class="far fa-circle nav-icon"></i>
+          <span>Ask</span>
+        </button>
+        <button class="nav-item" data-view="memories">
+          <i class="far fa-heart nav-icon"></i>
+          <span>Memories</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-section">
+        <h3>Categories</h3>
+        <div id="categories-list"></div>
+      </div>
+      
+      <div class="sidebar-footer">
+        <div class="footer-text">
+          Built by <a href="https://github.com/sangamhoni" target="_blank" rel="noopener noreferrer" class="footer-link">sangamhoni</a>
+        </div>
+        <div class="footer-social">
+          <a href="https://instagram.com/sangamhoni" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://linkedin.com/in/sangamhoni" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://github.com/sangamhoni" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+    
+    <main class="main-content">
+      <!-- Ask View -->
+      <div id="ask-view" class="view active">
+        <div class="ask-messages" id="chat-messages">
+          <div class="welcome-container">
+            <div class="welcome-brand">
+              <div class="welcome-logo">∞</div>
+              <h1>Continuum</h1>
+              <p>Your thoughts, remembered and connected</p>
+            </div>
+            
+            <div class="welcome-prompts">
+              <button class="welcome-prompt" data-prompt="What have I been thinking about lately?">
+                What have I been thinking about lately?
+                <span class="hint">Discover patterns in your notes</span>
+              </button>
+              <button class="welcome-prompt" data-prompt="Summarize my recent ideas">
+                Summarize my recent ideas
+                <span class="hint">Get a quick overview</span>
+              </button>
+              <button class="welcome-prompt" data-prompt="What connections exist between my memories?">
+                What connections exist between my memories?
+                <span class="hint">Find hidden links</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="ask-input-container">
+          <div class="filter-dropdown" id="ask-category-dropdown">
+            <button class="filter-dropdown-btn" id="ask-category-dropdown-btn">
+              <span>All categories</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="filter-dropdown-menu" id="ask-category-dropdown-menu"></div>
+          </div>
+          
+          <div class="filter-dropdown" id="ask-tags-dropdown">
+            <button class="filter-dropdown-btn" id="ask-tags-dropdown-btn">
+              <span>All tags</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="filter-dropdown-menu tags-menu" id="ask-tags-dropdown-menu"></div>
+          </div>
+          
+          <textarea 
+            id="chat-input" 
+            placeholder="Ask about your memories..."
+            rows="1"
+          ></textarea>
+          <button class="btn-send" id="send-btn">Ask</button>
+        </div>
+      </div>
+      
+      <!-- Memories View -->
+      <div id="memories-view" class="view">
+        <div class="memories-header">
+          <h2>Memories</h2>
+          
+          <div class="filters-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="search" id="search-input" placeholder="Search your memories...">
+            </div>
+            
+            <div class="filter-dropdown" id="category-dropdown">
+              <button class="filter-dropdown-btn" id="category-dropdown-btn">
+                <span>All categories</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="filter-dropdown-menu" id="category-dropdown-menu"></div>
+            </div>
+            
+            <div class="filter-dropdown" id="tags-dropdown">
+              <button class="filter-dropdown-btn" id="tags-dropdown-btn">
+                <span>Tags</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="filter-dropdown-menu tags-menu" id="tags-dropdown-menu"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="memories-grid">
+          <div class="masonry-grid" id="memories-list"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Capture Panel -->
+  <div id="save-panel" class="save-panel">
+    <header class="save-panel-header">
+      <h2>✦ Capture</h2>
+      <button class="save-panel-close" id="save-panel-close">×</button>
+    </header>
+    
+    <div class="save-panel-body">
+      <div class="save-panel-main">
+        <div class="save-panel-title-row">
+          <input 
+            type="text" 
+            id="memory-title" 
+            class="title-input"
+            placeholder="Add a title..."
+          >
+        </div>
+        
+        <textarea 
+          id="memory-content" 
+          class="content-input"
+          placeholder="What do you want to remember?
+
+Write a thought, paste an article, save a URL, or capture an idea..."
+        ></textarea>
+        
+        <div class="save-panel-meta">
+          <div class="meta-row">
+            <div class="meta-item">
+              <label>Category</label>
+              <div class="searchable-select" id="capture-category-select">
+                <div class="category-input-wrapper">
+                  <span class="category-letter-box" id="category-letter-box" style="display: none;"></span>
+                  <input 
+                    type="text" 
+                    id="capture-category-input"
+                    placeholder="Select an option or create one"
+                    autocomplete="off"
+                    readonly
+                  >
+                </div>
+                <div class="category-error" id="category-error" style="display: none;">Category cannot be empty</div>
+                <div class="searchable-select-menu" id="capture-category-menu">
+                  <div class="select-hint">Select an option or create one</div>
+                </div>
+              </div>
+            </div>
+            <div class="meta-item">
+              <label>Tags (Optional)</label>
+              <div class="searchable-select tags-select" id="capture-tags-select">
+                <div class="tags-input-wrapper">
+                  <input 
+                    type="text" 
+                    id="memory-tags" 
+                    placeholder="Select an option or create one"
+                    autocomplete="off"
+                  >
+                </div>
+                <div class="tags-selected" id="tags-selected"></div>
+                <div class="searchable-select-menu" id="tags-suggestions">
+                  <div class="select-hint">Select an option or create one</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="save-panel-footer">
+      <button class="btn-secondary" id="cancel-save-btn">Cancel</button>
+      <button class="btn-primary" id="confirm-save-btn">Save to Continuum</button>
+    </footer>
+  </div>
+  
+  <!-- Unified Memory Preview Dialog -->
+  <div id="memory-preview" class="memory-preview-overlay">
+    <div class="memory-preview-dialog">
+      <!-- Memory content -->
+      <div class="preview-content" id="preview-body"></div>
+      
+      <!-- Footer: View Mode -->
+      <div class="preview-footer" id="preview-footer-view">
+        <button class="btn-icon-text" id="preview-delete-btn">
+          <svg width="14" height="14" viewBox="0 0 448 512" fill="currentColor">
+            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+          </svg>
+          <span>Delete</span>
+        </button>
+        <button class="btn-primary" id="preview-edit-btn">Edit</button>
+      </div>
+      
+      <!-- Footer: Edit Mode -->
+      <div class="preview-footer" id="preview-footer-edit" style="display: none;">
+        <button class="btn-icon-text" id="preview-delete-btn-edit">
+          <svg width="14" height="14" viewBox="0 0 448 512" fill="currentColor">
+            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+          </svg>
+          <span>Delete</span>
+        </button>
+        <div class="edit-actions">
+          <button class="btn-secondary" id="preview-cancel-btn">Cancel</button>
+          <button class="btn-primary" id="preview-save-btn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Edit Field Dialog (for inline edits) -->
+  <div id="edit-field-dialog" class="edit-field-overlay">
+    <div class="edit-field-dialog">
+      <div class="edit-field-header">
+        <h3 id="edit-field-title">Edit</h3>
+        <button class="edit-field-close" id="edit-field-close">×</button>
+      </div>
+      <div class="edit-field-body" id="edit-field-body"></div>
+      <div class="edit-field-footer">
+        <button class="btn-secondary" id="edit-field-cancel">Cancel</button>
+        <button class="btn-primary" id="edit-field-save">Save</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Delete Confirmation -->
+  <div id="delete-dialog" class="delete-dialog">
+    <div class="delete-content">
+      <div class="delete-icon-row">
+        <i class="fas fa-trash-alt"></i>
+      </div>
+      <h3 class="delete-title">Forget this memory?</h3>
+      <p class="delete-message">This action cannot be undone. This memory will be permanently removed.</p>
+      <div class="delete-effects">
+        <div class="effect-item">
+          <i class="fas fa-times"></i>
+          <span>The memory content will be deleted</span>
+        </div>
+        <div class="effect-item">
+          <i class="fas fa-unlink"></i>
+          <span>All connections will be removed</span>
+        </div>
+        <div class="effect-item">
+          <i class="fas fa-search-minus"></i>
+          <span>Won't appear in future searches</span>
+        </div>
+      </div>
+      <div class="delete-actions">
+        <button class="btn-cancel" id="delete-cancel-btn">Keep it</button>
+        <button class="btn-delete-confirm" id="delete-confirm-btn">Delete forever</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast notifications -->
+  <div id="toast-container" class="toast-container"></div>
+  
+  <script src="/js/user.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/store.js"></script>
+  <script src="/js/preview.js"></script>
+  <script src="/js/chat.js"></script>
+  <script src="/js/archive.js"></script>
+  <script src="/js/save-modal.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

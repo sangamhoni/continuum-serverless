@@ -1,0 +1,25 @@
+name = "continuum"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+assets = { directory = "./frontend" }
+
+# Workers AI binding
+[ai]
+binding = "AI"
+
+# Durable Objects
+[[durable_objects.bindings]]
+name = "MEMORY_BRAIN"
+class_name = "MemoryBrain"
+
+# Migrations for Durable Objects
+# Using new_sqlite_classes for free plan compatibility
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MemoryBrain"]
+
+# Development settings
+[dev]
+port = 8787
+local_protocol = "http"
